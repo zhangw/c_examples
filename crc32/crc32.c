@@ -41,13 +41,17 @@ static uint32_t hash_sparse_4_16(uint64_t seed, const char* str, uint32_t len)
 }
 
 
+#define SEED 0x82F63B78
 int main() {
-  const char *ip = "192.168.31.200";
-  uint64_t start = rdtsc();
-  uint32_t ip_uint32 = hash_sparse_4_16(start, ip, strlen(ip));
-  uint64_t end = rdtsc();
-
-  printf("IP: %s -> hash_sparse_4_16: 0x%08X (%u)\n", ip, ip_uint32, ip_uint32);
-  printf("Execution cycles: %llu\n", end - start);
+  char * ips[10] = {"192.168.31.200", "192.168.31.201", "192.168.31.202", "192.168.31.203", "192.168.31.204", "192.168.31.205", "192.168.31.206", "192.168.31.207", "192.168.31.208", "192.168.31.209"};
+  int i = 9;
+  do{
+      char * ip = ips[i];
+      uint64_t start = rdtsc();
+      uint32_t ip_uint32 = hash_sparse_4_16(SEED, ip, strlen(ip));
+      uint64_t end = rdtsc();
+      printf("IP: %s -> hash_sparse_4_16: 0x%08X (%u)\n", ip, ip_uint32, ip_uint32);
+      printf("Execution cycles: %llu\n", end - start);
+  }while(i--);
   return 0;
 }
